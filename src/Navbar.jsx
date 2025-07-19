@@ -1,13 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+  
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
+  // Close menu when route changes
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
   
   return (
-    <nav className="flex items-center justify-between px-4 sm:px-8 py-4 bg-[#151c26] border-b border-[#232b36]">
+    <nav className="relative flex items-center justify-between px-4 sm:px-8 py-4 bg-[#151c26] border-b border-[#232b36]">
       <div className="flex items-center gap-2 sm:gap-4">
         <Link to="/" className="font-bold text-white text-lg sm:text-xl flex items-center gap-2">
           <svg width="20" height="20" className="sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#2563eb"/><path d="M7 17V7h2v3.5l2-2V7h2v3.5l2-2V7h2v10h-2v-3.5l-2 2V17h-2v-3.5l-2 2V17H7Z" fill="#fff"/></svg>
@@ -66,6 +89,7 @@ const Navbar = () => {
         <button 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="text-white p-1"
+          aria-label="Toggle menu"
         >
           <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -75,7 +99,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-[#151c26] border-b border-[#232b36] md:hidden z-50">
+        <div ref={menuRef} className="absolute top-full left-0 right-0 bg-[#151c26] border-b border-[#232b36] md:hidden z-50 shadow-lg">
           <div className="px-4 py-4 space-y-4">
             <div className="relative mb-4">
               <input
