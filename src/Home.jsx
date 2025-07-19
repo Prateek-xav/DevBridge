@@ -1,35 +1,40 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-[#101827] min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-1 w-full max-w-5xl mx-auto px-4 py-10">
         {/* Hero Section */}
-        <section className="relative rounded-xl mb-10 overflow-hidden">
-          <img
-            src="/hero.jpg"
-            alt="Hero"
-            className="w-full h-96 object-cover"
-          />
-          <div className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-center p-8">
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-4">
-              Share Your Ideas, Inspire Innovation
-            </h1>
-            <p className="text-lg text-gray-200 mb-6 max-w-2xl">
-              Connect with developers and bring your ideas to life. Explore innovative projects and contribute to the future of technology.
-            </p>
-            <div className="flex w-full max-w-md mx-auto bg-white/20 backdrop-blur-sm rounded-lg overflow-hidden">
-              <input
-                type="text"
-                placeholder="Search"
-                className="flex-1 px-4 py-3 bg-transparent text-white placeholder-gray-200 focus:outline-none"
-              />
-              <button className="px-6 py-3 bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors">
-                Search
-              </button>
+        <section className="bg-[#232b36] rounded-xl p-8 mb-10">
+          <div className="relative w-full">
+            <img
+              src="/hero.jpg"
+              alt="Hero"
+              className="w-full max-h-64 object-cover rounded-lg"
+            />
+            <div className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-center rounded-lg p-8">
+              <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-4">
+                Share Your Ideas, Inspire Innovation
+              </h1>
+              <p className="text-lg text-gray-200 mb-6">
+                Connect with developers and bring your ideas to life. Explore innovative projects and contribute to the future of technology.
+              </p>
+              <div className="flex w-full max-w-md mx-auto bg-white/10 rounded-lg overflow-hidden">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="flex-1 px-4 py-2 bg-transparent text-white placeholder-gray-200 focus:outline-none"
+                />
+                <button className="px-6 py-2 bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">
+                  Search
+                </button>
+              </div>
             </div>
           </div>
         </section>
@@ -38,7 +43,12 @@ const Home = () => {
         <section className="mb-16">
           <h2 className="text-3xl font-extrabold text-white mb-4">Get Started</h2>
           <p className="text-gray-300 mb-6">Join our community and start sharing your ideas or exploring projects today.</p>
-          <button className="bg-blue-600 text-white px-6 py-3 rounded font-semibold mb-8 hover:bg-blue-700">Explore Ideas</button>
+          <button 
+            onClick={() => navigate('/explore')}
+            className="bg-blue-600 text-white px-6 py-3 rounded font-semibold mb-8 hover:bg-blue-700"
+          >
+            Explore Ideas
+          </button>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div className="bg-[#232b36] rounded-lg p-6 flex flex-col items-start">
               <div className="mb-3 text-blue-400">
